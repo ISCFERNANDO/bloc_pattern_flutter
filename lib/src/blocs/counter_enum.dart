@@ -1,0 +1,1 @@
+enum Counter { INCREMENT, DECREMENT, FETCH }
