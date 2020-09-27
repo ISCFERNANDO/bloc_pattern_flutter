@@ -1,16 +1,17 @@
 import 'package:example_bloc/src/blocs/counter_bloc.dart';
 import 'package:example_bloc/src/blocs/counter_enum.dart';
-import 'package:example_bloc/src/screens/double_page.dart';
+import 'package:example_bloc/src/screens/double_screen.dart';
+import 'package:example_bloc/src/widgets/floating_actions_widget.dart';
 import 'package:flutter/material.dart';
 
-class CounterPage extends StatefulWidget {
-  CounterPage({Key key}) : super(key: key);
+class CounterScreen extends StatefulWidget {
+  CounterScreen({Key key}) : super(key: key);
 
   @override
-  _CounterPageState createState() => _CounterPageState();
+  _CounterScreenState createState() => _CounterScreenState();
 }
 
-class _CounterPageState extends State<CounterPage> {
+class _CounterScreenState extends State<CounterScreen> {
   CounterBlock _counterBlock = CounterBlock();
 
   @override
@@ -31,7 +32,7 @@ class _CounterPageState extends State<CounterPage> {
               Navigator.of(context)
                   .push(
                     new MaterialPageRoute(
-                      builder: (BuildContext context) => DoublePage(),
+                      builder: (BuildContext context) => DoubleScreen(),
                     ),
                   )
                   .then((_) => _counterBlock.sendEvent.add(Counter.FETCH));
@@ -58,24 +59,18 @@ class _CounterPageState extends State<CounterPage> {
           ],
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: 'Button 1',
-            onPressed: () => _counterBlock.sendEvent.add(Counter.DECREMENT),
-            tooltip: 'Decrement',
-            child: Icon(Icons.remove),
-          ),
-          SizedBox(width: 16),
-          FloatingActionButton(
-            heroTag: 'Button 2',
-            onPressed: () => _counterBlock.sendEvent.add(Counter.INCREMENT),
-            tooltip: 'Increment',
-            child: Icon(Icons.add),
-          ),
-        ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionsWidget(
+        _decrement,
+        _increment,
+      ),
     );
+  }
+
+  _increment() {
+    _counterBlock.sendEvent.add(Counter.INCREMENT);
+  }
+
+  _decrement() {
+    _counterBlock.sendEvent.add(Counter.DECREMENT);
   }
 }

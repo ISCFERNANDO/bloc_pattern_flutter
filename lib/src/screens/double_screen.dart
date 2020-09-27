@@ -1,15 +1,16 @@
 import 'package:example_bloc/src/blocs/counter_enum.dart';
 import 'package:example_bloc/src/blocs/double_counter_block.dart';
+import 'package:example_bloc/src/widgets/floating_actions_widget.dart';
 import 'package:flutter/material.dart';
 
-class DoublePage extends StatefulWidget {
-  DoublePage({Key key}) : super(key: key);
+class DoubleScreen extends StatefulWidget {
+  DoubleScreen({Key key}) : super(key: key);
 
   @override
-  _DoublePageState createState() => _DoublePageState();
+  _DoubleScreenState createState() => _DoubleScreenState();
 }
 
-class _DoublePageState extends State<DoublePage> {
+class _DoubleScreenState extends State<DoubleScreen> {
   DoubleCounterBlock _doubleCounterBlock = DoubleCounterBlock();
 
   @override
@@ -48,26 +49,18 @@ class _DoublePageState extends State<DoublePage> {
           ],
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: 'Button 1',
-            onPressed: () =>
-                _doubleCounterBlock.sendEvent.add(Counter.DECREMENT),
-            tooltip: 'Decrement',
-            child: Icon(Icons.remove),
-          ),
-          SizedBox(width: 16),
-          FloatingActionButton(
-            heroTag: 'Button 2',
-            onPressed: () =>
-                _doubleCounterBlock.sendEvent.add(Counter.INCREMENT),
-            tooltip: 'Increment',
-            child: Icon(Icons.add),
-          ),
-        ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionsWidget(
+        _decrement,
+        _increment,
+      ),
     );
+  }
+
+  _increment() {
+    _doubleCounterBlock.sendEvent.add(Counter.INCREMENT);
+  }
+
+  _decrement() {
+    _doubleCounterBlock.sendEvent.add(Counter.DECREMENT);
   }
 }

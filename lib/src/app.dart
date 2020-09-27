@@ -1,4 +1,4 @@
-import 'package:example_bloc/src/screens/counter_page.dart';
+import 'package:example_bloc/src/screens/counter_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CounterPage(),
+      home: CounterScreen(),
     );
   }
 }
